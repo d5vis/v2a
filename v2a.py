@@ -7,14 +7,6 @@ import argparse
 import cv2
 import numpy as np
 
-parser = argparse.ArgumentParser(description='video to ascii')
-parser.add_argument('input', help='input video file')
-parser.add_argument('--output', help='output video file name (without extension)')
-args = parser.parse_args()
-input = args.input
-file_name = input.split('.')[0]
-output = args.output if args.output else f'{file_name}_ascii'
-
 class V2A:
     def __init__(self, input, output):
         self.input = input
@@ -64,7 +56,17 @@ class V2A:
         self.cap.release()
         out.release()
         print(f'[ :) ] {self.input} converted to ascii, saved as {self.output}.mp4')
+        
+
+parser = argparse.ArgumentParser(description='video to ascii')
+parser.add_argument('input', help='input video file')
+parser.add_argument('--output', help='output video file name (without extension)')
+args = parser.parse_args()
+input = args.input
+file_name = input.split('.')[0]
+output = args.output if args.output else f'{file_name}_ascii'
 
 v2a = V2A(input, output)
 v2a.convert()
+
 print('[ :) ] done')
