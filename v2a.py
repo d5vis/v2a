@@ -8,6 +8,13 @@ import cv2
 import numpy as np
 
 class V2A:
+    """
+    Video to ASCII.
+
+    Args:
+    input (str): input video file
+    output (str): output video file name (without extension)
+    """
     def __init__(self, input, output):
         self.input = input
         self.output = output
@@ -22,9 +29,27 @@ class V2A:
         self.monospace_font = ImageFont.truetype('SpaceMono-Regular.ttf', self.font_size)
 
     def _pixel_to_ascii(self, pixel):
+        """
+        Convert pixel to ASCII character.
+
+        Args:
+        pixel (int): pixel value
+
+        Returns:
+        str: ASCII character
+        """
         return ASCII[int(pixel / 255 * ASCII_LEN)]
     
     def _frame_to_ascii(self, frame):
+        """
+        Convert frame to ASCII.
+        
+        Args:
+        frame (np.array): frame
+        
+        Returns:
+        str: ASCII frame
+        """
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ascii_frame = ''
         for i in range(ASCII_HEIGHT):
@@ -34,6 +59,9 @@ class V2A:
         return ascii_frame
 
     def convert(self):
+        """
+        Convert video to ASCII.
+        """
         print(f'[ :| ] converting {self.input} to ascii...')
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         out = cv2.VideoWriter(f'{self.output}.mp4', fourcc, self.fps, (self.width, self.height))
